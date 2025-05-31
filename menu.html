@@ -2,24 +2,20 @@
 <html lang="cs">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu - Bond Café Praha | Nejlepší káva a snídaně v centru Prahy</title>
     <meta name="description" content="Prohlédněte si naše menu - káva, snídaně, dezerty a lehká jídla. Bond Café Praha, Štupartská 9, Staré Město.">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Bond Café">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
         
         body {
@@ -28,8 +24,6 @@
             line-height: 1.6;
             overflow-x: hidden;
             background: #fcf9f6;
-            -webkit-text-size-adjust: 100%;
-            -webkit-tap-highlight-color: transparent;
         }
         
         .container {
@@ -39,84 +33,94 @@
             padding: 0 20px;
         }
         
-        /* Header */
+        /* Enhanced Header */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 40px;
+            padding: 15px 40px;
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border-bottom: 1px solid rgba(201, 167, 124, 0.1);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
         }
         
         header.scrolled {
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-            padding: 15px 40px;
-            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.15);
+            padding: 12px 40px;
         }
         
         .logo {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 600;
             letter-spacing: 2px;
-            color: #c9a77c;
+            background: linear-gradient(135deg, #c9a77c, #b8966b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .nav-links {
             display: flex;
-            gap: 40px;
+            gap: 30px;
         }
         
         .nav-links a {
             font-size: 16px;
-            transition: color 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             padding: 8px 0;
             color: #333;
+            text-decoration: none;
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background: linear-gradient(90deg, #c9a77c, #b8966b);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(-50%);
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
         }
         
         .nav-links a:hover {
             color: #c9a77c;
+            transform: translateY(-2px);
         }
 
         /* WiFi Connect Button */
         .wifi-connect {
-            background: #c9a77c;
+            background: linear-gradient(135deg, #c9a77c, #b8966b);
             color: white;
             border: none;
             padding: 10px 18px;
-            border-radius: 20px;
+            border-radius: 25px;
             font-family: 'Cormorant Garamond', serif;
             font-size: 14px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
-            gap: 6px;
-            -webkit-appearance: none;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            user-select: none;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(201, 167, 124, 0.3);
         }
 
         .wifi-connect:hover {
-            background: #b8966b;
-        }
-
-        .wifi-connect:active {
-            transform: scale(0.95);
-        }
-
-        .wifi-connect.connected {
-            background: #4CAF50;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(201, 167, 124, 0.4);
         }
 
         /* Mobile Menu */
@@ -126,44 +130,96 @@
             border: none;
             font-size: 24px;
             cursor: pointer;
-            -webkit-appearance: none;
+            color: #333;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .mobile-menu a {
+            color: white;
+            font-size: 24px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu a:hover {
+            color: #c9a77c;
+        }
+
+        .mobile-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
         }
 
         /* Hero Section */
         .menu-hero {
             height: 50vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            min-height: 400px;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             color: white;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            margin-top: 80px;
+            margin-top: 70px;
             position: relative;
+        }
+
+        .menu-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.3) 100%);
         }
 
         .menu-hero-content {
             position: relative;
             z-index: 2;
+            padding: 0 20px;
         }
         
         .menu-hero h1 {
-            font-size: 64px;
+            font-size: clamp(32px, 8vw, 72px);
             font-weight: 400;
             margin-bottom: 20px;
+            animation: fadeInUp 1s ease-out;
         }
         
         .menu-hero p {
-            font-size: 18px;
+            font-size: clamp(16px, 4vw, 20px);
             max-width: 600px;
+            animation: fadeInUp 1s ease-out 0.3s both;
         }
 
         /* Quick Info Bar */
         .quick-info {
-            background: #c9a77c;
+            background: linear-gradient(135deg, #c9a77c, #b8966b);
             color: white;
             padding: 20px 0;
             text-align: center;
@@ -171,10 +227,11 @@
 
         .quick-info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
             max-width: 1000px;
             margin: 0 auto;
+            padding: 0 20px;
         }
 
         .quick-info-item {
@@ -182,113 +239,85 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            font-size: 16px;
+            font-size: 14px;
         }
 
         .quick-info-item i {
-            font-size: 18px;
+            font-size: 16px;
         }
 
         /* Menu Content */
         .menu-content {
-            padding: 60px 5% 50px;
-        }
-
-        /* Category Navigation */
-        .category-nav {
-            position: sticky;
-            top: 100px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 20px 0;
-            margin-bottom: 40px;
-            border-radius: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            z-index: 100;
-        }
-
-        .category-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            padding: 0 20px;
-        }
-
-        .category-tab {
-            padding: 10px 20px;
-            background: white;
-            border: 1px solid #c9a77c;
-            color: #c9a77c;
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            border-radius: 20px;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-            -webkit-appearance: none;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            user-select: none;
-        }
-
-        .category-tab.active,
-        .category-tab:hover {
-            background: #c9a77c;
-            color: white;
-        }
-
-        .category-tab:active {
-            transform: scale(0.95);
+            padding: 60px 3% 50px;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         /* Menu Sections */
         .menu-section {
-            margin-bottom: 60px;
+            margin-bottom: 80px;
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
         }
 
         .section-title {
-            font-size: 42px;
+            font-size: clamp(32px, 6vw, 48px);
             font-weight: 400;
             margin-bottom: 15px;
-            color: #c9a77c;
+            background: linear-gradient(135deg, #c9a77c, #b8966b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .section-subtitle {
-            font-size: 18px;
+            font-size: clamp(14px, 3vw, 18px);
             color: #666;
             max-width: 600px;
             margin: 0 auto;
+            padding: 0 20px;
         }
 
         /* Menu Grid */
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 25px;
-            max-width: 1200px;
             margin: 0 auto;
         }
 
         .menu-item {
             background: white;
-            border-radius: 15px;
+            border-radius: 20px;
             padding: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            transition: all 0.2s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
 
         .menu-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #c9a77c, #b8966b);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .menu-item:hover::before {
+            opacity: 1;
         }
 
         .menu-item-header {
@@ -300,7 +329,7 @@
         .menu-item-image {
             width: 70px;
             height: 70px;
-            border-radius: 10px;
+            border-radius: 12px;
             object-fit: cover;
             flex-shrink: 0;
         }
@@ -319,7 +348,7 @@
         .menu-item-desc {
             font-size: 14px;
             color: #666;
-            line-height: 1.4;
+            line-height: 1.5;
             margin-bottom: 15px;
         }
 
@@ -327,37 +356,35 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .menu-item-price {
             font-size: 20px;
             font-weight: 700;
-            color: #c9a77c;
+            background: linear-gradient(135deg, #c9a77c, #b8966b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .foodora-badge {
-            background: #e8497b;
-            color: white;
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 10px;
-            font-weight: 500;
-        }
+         
 
         /* Table Style for Traditional Menu Items */
         .menu-table {
             background: white;
-            border-radius: 15px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
         }
 
         .menu-table-header {
-            background: #c9a77c;
+            background: linear-gradient(135deg, #c9a77c, #b8966b);
             color: white;
             padding: 20px;
-            font-size: 22px;
+            font-size: clamp(18px, 4vw, 24px);
             font-weight: 600;
         }
 
@@ -369,9 +396,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 18px 20px;
+            padding: 15px 20px;
             border-bottom: 1px solid #f0f0f0;
-            transition: background-color 0.2s ease;
+            transition: all 0.3s ease;
         }
 
         .menu-table-row:hover {
@@ -390,7 +417,7 @@
             font-size: 16px;
             font-weight: 600;
             color: #333;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
         }
 
         .menu-table-desc {
@@ -403,17 +430,17 @@
             font-weight: 700;
             color: #c9a77c;
             white-space: nowrap;
-            margin-left: 20px;
+            margin-left: 15px;
         }
 
         /* Special Notes */
         .special-note {
-            background: #fff9e6;
+            background: linear-gradient(135deg, #fff9e6, #fdf4e3);
             border-left: 4px solid #c9a77c;
-            padding: 15px 20px;
-            margin: 25px 0;
-            border-radius: 8px;
-            font-size: 14px;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 10px;
+            font-size: 15px;
             color: #666;
         }
 
@@ -424,29 +451,29 @@
         /* Payment Info */
         .payment-info {
             background: #f8f8f8;
-            padding: 50px 5%;
+            padding: 60px 3%;
             text-align: center;
-            margin: 40px 0;
+            margin: 50px 0;
         }
 
         .payment-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
             max-width: 900px;
             margin: 0 auto;
         }
 
         .payment-card {
             background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            transition: transform 0.2s ease;
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
         }
 
         .payment-card:hover {
-            transform: translateY(-2px);
+            transform: translateY(-5px);
         }
 
         .payment-card i {
@@ -457,7 +484,7 @@
 
         .payment-card h3 {
             font-size: 20px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             color: #333;
         }
 
@@ -474,21 +501,21 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.8);
             z-index: 10000;
             justify-content: center;
             align-items: center;
-            -webkit-overflow-scrolling: touch;
+            padding: 20px;
         }
 
         .wifi-modal-content {
             background: white;
             padding: 30px;
-            border-radius: 15px;
+            border-radius: 20px;
             text-align: center;
-            max-width: 350px;
-            width: 90%;
-            margin: 20px;
+            max-width: 400px;
+            width: 100%;
+            animation: modalSlideIn 0.3s ease-out;
         }
 
         .wifi-modal h3 {
@@ -499,40 +526,34 @@
 
         .wifi-info {
             margin: 20px 0;
-            padding: 15px;
+            padding: 20px;
             background: #f8f8f8;
             border-radius: 10px;
         }
 
         .wifi-connect-btn {
-            background: #c9a77c;
+            background: linear-gradient(135deg, #c9a77c, #b8966b);
             color: white;
             border: none;
             padding: 12px 25px;
-            border-radius: 20px;
+            border-radius: 25px;
             font-size: 14px;
             cursor: pointer;
             margin: 8px;
-            transition: all 0.2s ease;
-            -webkit-appearance: none;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            user-select: none;
+            transition: all 0.3s ease;
+            width: calc(100% - 16px);
         }
 
         .wifi-connect-btn:hover {
-            background: #b8966b;
-        }
-
-        .wifi-connect-btn:active {
-            transform: scale(0.95);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(201, 167, 124, 0.4);
         }
 
         /* Footer */
         footer {
-            background: #000;
+            background: linear-gradient(135deg, #000, #1a1a1a);
             color: white;
-            padding: 50px 5% 30px;
+            padding: 50px 3% 30px;
         }
         
         .footer-content {
@@ -540,34 +561,58 @@
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
             margin-bottom: 30px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         .footer-section h3 {
-            font-size: 22px;
+            font-size: 20px;
             margin-bottom: 15px;
             color: #c9a77c;
         }
 
         .footer-section p {
+            font-size: 14px;
             margin-bottom: 10px;
-            font-size: 15px;
+            color: #ccc;
         }
 
         .footer-section a {
-            color: white;
-            transition: color 0.2s ease;
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
         }
 
         .footer-section a:hover {
             color: #c9a77c;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            header {
-                padding: 15px 20px;
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
             }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
             .nav-links {
                 display: none;
             }
@@ -575,9 +620,33 @@
             .mobile-menu-btn {
                 display: block;
             }
+
+            header {
+                padding: 12px 20px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .wifi-connect {
+                padding: 8px 15px;
+                font-size: 12px;
+            }
             
-            .menu-hero h1 {
-                font-size: 40px;
+            .menu-hero {
+                height: 40vh;
+                min-height: 300px;
+                background-attachment: scroll;
+                margin-top: 60px;
+            }
+
+            .quick-info-item {
+                font-size: 12px;
+            }
+
+            .quick-info-item i {
+                font-size: 14px;
             }
             
             .menu-grid {
@@ -585,9 +654,14 @@
                 gap: 20px;
             }
 
+            .menu-item {
+                padding: 15px;
+            }
+
             .menu-item-header {
                 flex-direction: column;
                 text-align: center;
+                gap: 10px;
             }
 
             .menu-item-image {
@@ -596,25 +670,11 @@
                 margin: 0 auto;
             }
 
-            .category-nav {
-                position: relative;
-                top: 0;
-                margin-bottom: 30px;
-            }
-
-            .category-tabs {
-                gap: 10px;
-            }
-
-            .category-tab {
-                padding: 8px 15px;
-                font-size: 14px;
-            }
-
             .menu-table-row {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 8px;
+                gap: 10px;
+                padding: 15px;
             }
 
             .menu-table-price {
@@ -622,36 +682,61 @@
                 align-self: flex-end;
             }
 
-            .section-title {
-                font-size: 32px;
-            }
-
-            .quick-info-grid {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-
             .payment-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
-        }
 
-        /* Apple-specific optimizations */
-        @supports (-webkit-touch-callout: none) {
-            .menu-item,
-            .category-tab,
-            .wifi-connect,
-            .wifi-connect-btn {
-                -webkit-tap-highlight-color: transparent;
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 25px;
+                text-align: center;
             }
         }
 
-        /* Smooth scrolling for iOS */
-        @media screen and (-webkit-min-device-pixel-ratio: 0) {
-            html {
-                scroll-behavior: smooth;
-                -webkit-overflow-scrolling: touch;
+        /* Tablet Responsive */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .menu-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+            .nav-links a {
+                font-size: 14px;
+            }
+        }
+
+        /* Large Desktop */
+        @media (min-width: 1400px) {
+            .menu-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            header {
+                position: relative;
+                box-shadow: none;
+            }
+
+            .wifi-connect, .mobile-menu-btn {
+                display: none;
+            }
+
+            .menu-hero {
+                height: auto;
+                padding: 50px 0;
+                background: #f8f8f8;
+                color: black;
+            }
+
+            .quick-info {
+                background: #f0f0f0;
+                color: black;
             }
         }
     </style>
@@ -659,7 +744,7 @@
 <body>
     <!-- Header -->
     <header>
-        <div class="logo">BOND CAFÉ</div>
+         <a href="index.html"><div class="logo">BOND CAFÉ</div></a>
         <nav class="nav-links">
             <a href="#eggs">Snídaně</a>
             <a href="#coffee">Káva</a>
@@ -672,17 +757,27 @@
                 <i class="fas fa-wifi"></i>
                 <span>WiFi</span>
             </button>
-            <button class="mobile-menu-btn">
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
     </header>
 
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-close" onclick="toggleMobileMenu()">&times;</button>
+        <a href="#eggs" onclick="toggleMobileMenu()">Snídaně</a>
+        <a href="#coffee" onclick="toggleMobileMenu()">Káva</a>
+        <a href="#drinks" onclick="toggleMobileMenu()">Nápoje</a>
+        <a href="#cocktails" onclick="toggleMobileMenu()">Koktejly</a>
+        <a href="#contact" onclick="toggleMobileMenu()">Kontakt</a>
+    </div>
+
     <!-- Hero Section -->
     <section class="menu-hero">
         <div class="menu-hero-content">
-            <h1>BOND MENU</h1>
-            <p>Kompletní menu s čerstvými snídaněmi, výběrovou kávou a jedinečnými koktejly</p>
+            <h1 data-aos="fade-up">BOND MENU</h1>
+            <p data-aos="fade-up" data-aos-delay="300">Kompletní menu s čerstvými snídaněmi, výběrovou kávou a jedinečnými koktejly</p>
         </div>
     </section>
 
@@ -704,27 +799,17 @@
         </div>
     </section>
 
-    <!-- Category Navigation -->
-    <div class="category-nav">
-        <div class="category-tabs">
-            <div class="category-tab active" data-category="eggs">VEJCE & SNÍDANĚ</div>
-            <div class="category-tab" data-category="coffee">KÁVA & ČAJ</div>
-            <div class="category-tab" data-category="drinks">NÁPOJE</div>
-            <div class="category-tab" data-category="cocktails">KOKTEJLY & ALKOHOL</div>
-        </div>
-    </div>
-
     <!-- Menu Content -->
     <section class="menu-content">
         <!-- Eggs Section -->
-        <div class="menu-section" id="eggs-section">
+        <div class="menu-section" id="eggs">
             <div class="section-header">
                 <h2 class="section-title">Vejce & Snídaně</h2>
                 <p class="section-subtitle">Čerstvé snídaně připravované každý den od 8:30</p>
             </div>
 
             <!-- Eggs -->
-            <div class="menu-table">
+            <div class="menu-table" data-aos="fade-up">
                 <div class="menu-table-header">
                     <i class="fas fa-egg"></i> EGGS / VEJCE
                 </div>
@@ -774,9 +859,9 @@
                 </div>
             </div>
 
-            <!-- Sweet Breakfast & Other Items -->
+            <!-- Sweet Breakfast & More -->
             <div class="menu-grid">
-                <div class="menu-item">
+                <div class="menu-item" data-aos="fade-up">
                     <div class="menu-item-header">
                         <img src="https://images.pexels.com/photos/1395319/pexels-photo-1395319.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Toast with Nutella" class="menu-item-image">
                         <div class="menu-item-info">
@@ -789,163 +874,191 @@
                     <p class="menu-item-desc">3 toasty, nutella, džem, med</p>
                 </div>
 
-                <div class="menu-item">
+                <div class="menu-item" data-aos="fade-up" data-aos-delay="100">
                     <div class="menu-item-header">
                         <img src="https://images.pexels.com/photos/1395319/pexels-photo-1395319.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Mini Croissants" class="menu-item-image">
                         <div class="menu-item-info">
                             <h3 class="menu-item-name">3 mini croissanty</h3>
                             <div class="menu-item-footer">
                                 <span class="menu-item-price">210 Kč</span>
-                                <span class="foodora-badge">Foodora</span>
+                                <span class=" -badge"> </span>
                             </div>
                         </div>
                     </div>
-                    <p class="menu-item-desc">Nutella, džem, med</p>
+                    <p class="menu-item-desc">3 mini croissanty, nutella, džem, med</p>
                 </div>
 
-                <div class="menu-item">
+                <div class="menu-item" data-aos="fade-up" data-aos-delay="200">
                     <div class="menu-item-header">
                         <img src="https://images.pexels.com/photos/3026808/pexels-photo-3026808.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Pancakes" class="menu-item-image">
+                        <div class="menu-item-info">
+                            <h3 class="menu-item-name">3 lívance smetana ovoce</h3>
+                            <div class="menu-item-footer">
+                                <span class="menu-item-price">240 Kč</span>
+                                <span class=" -badge"> </span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="menu-item-desc">3 lívance, zakysaná smetana, ovoce</p>
+                </div>
+
+                <div class="menu-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="menu-item-header">
+                        <img src="https://images.pexels.com/photos/3026808/pexels-photo-3026808.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Nutella Pancakes" class="menu-item-image">
+                        <div class="menu-item-info">
+                            <h3 class="menu-item-name">3 lívance nutella</h3>
+                            <div class="menu-item-footer">
+                                <span class="menu-item-price">240 Kč</span>
+                                <span class=" -badge"> </span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="menu-item-desc">3 lívance, nutella, ovoce</p>
+                </div>
+
+                <div class="menu-item" data-aos="fade-up" data-aos-delay="400">
+                    <div class="menu-item-header">
+                        <img src="https://images.pexels.com/photos/3026808/pexels-photo-3026808.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Czech Pancakes" class="menu-item-image">
                         <div class="menu-item-info">
                             <h3 class="menu-item-name">České lívance</h3>
                             <div class="menu-item-footer">
                                 <span class="menu-item-price">255 Kč</span>
-                                <span class="foodora-badge">Foodora</span>
+                                <span class=" -badge"> </span>
                             </div>
                         </div>
                     </div>
                     <p class="menu-item-desc">3 tradiční české lívance se skořicí, máslem a ovocem</p>
                 </div>
 
-                <div class="menu-item">
+                <div class="menu-item" data-aos="fade-up" data-aos-delay="500">
                     <div class="menu-item-header">
                         <img src="https://images.pexels.com/photos/2787341/pexels-photo-2787341.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Granola Bowl" class="menu-item-image">
                         <div class="menu-item-info">
                             <h3 class="menu-item-name">Granola Bowl</h3>
                             <div class="menu-item-footer">
                                 <span class="menu-item-price">240 Kč</span>
-                                <span class="foodora-badge">Foodora</span>
+                                <span class=" -badge"> </span>
                             </div>
                         </div>
                     </div>
                     <p class="menu-item-desc">Granola, jogurt, javorový sirup, ovoce, kokosové chipsy, ořechy</p>
                 </div>
 
-                <div class="menu-item">
+                <div class="menu-item" data-aos="fade-up" data-aos-delay="600">
                     <div class="menu-item-header">
-                        <img src="https://images.pexels.com/photos/3026808/pexels-photo-3026808.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Porridge Bowl" class="menu-item-image">
+                        <img src="https://images.pexels.com/photos/2787341/pexels-photo-2787341.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Porridge Bowl" class="menu-item-image">
                         <div class="menu-item-info">
                             <h3 class="menu-item-name">Porridge Bowl</h3>
                             <div class="menu-item-footer">
                                 <span class="menu-item-price">240 Kč</span>
-                                <span class="foodora-badge">Foodora</span>
+                                <span class=" -badge"> </span>
                             </div>
                         </div>
                     </div>
                     <p class="menu-item-desc">Ovesná kaše s ovocem a bílou čokoládou</p>
                 </div>
 
-                <div class="menu-item">
+                <div class="menu-item" data-aos="fade-up" data-aos-delay="700">
                     <div class="menu-item-header">
-                        <img src="https://images.pexels.com/photos/4958792/pexels-photo-4958792.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Bond Toasty" class="menu-item-image">
+                        <img src="https://images.pexels.com/photos/4958792/pexels-photo-4958792.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Ham Toasty" class="menu-item-image">
                         <div class="menu-item-info">
-                            <h3 class="menu-item-name">Bond Toasty</h3>
+                            <h3 class="menu-item-name">Toasty šunka sýr</h3>
                             <div class="menu-item-footer">
                                 <span class="menu-item-price">185 Kč</span>
-                                <span class="foodora-badge">Foodora</span>
+                                <span class=" -badge"> </span>
                             </div>
                         </div>
                     </div>
                     <p class="menu-item-desc">Toasty se šunkou, sýrem, salát</p>
                 </div>
 
-                <div class="menu-item">
+                <div class="menu-item" data-aos="fade-up" data-aos-delay="800">
                     <div class="menu-item-header">
-                        <img src="https://images.pexels.com/photos/4958792/pexels-photo-4958792.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Parmská šunka toast" class="menu-item-image">
+                        <img src="https://images.pexels.com/photos/4958792/pexels-photo-4958792.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Parma Toasty" class="menu-item-image">
                         <div class="menu-item-info">
                             <h3 class="menu-item-name">Toasty parmská šunka</h3>
                             <div class="menu-item-footer">
                                 <span class="menu-item-price">185 Kč</span>
-                                <span class="foodora-badge">Foodora</span>
+                                <span class=" -badge"> </span>
                             </div>
                         </div>
                     </div>
                     <p class="menu-item-desc">Toasty s parmskou šunkou, sýrem, salát</p>
                 </div>
 
-                <div class="menu-item">
+                <div class="menu-item" data-aos="fade-up" data-aos-delay="900">
                     <div class="menu-item-header">
-                        <img src="https://images.pexels.com/photos/4958792/pexels-photo-4958792.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Belgický toast" class="menu-item-image">
+                        <img src="https://images.pexels.com/photos/4958792/pexels-photo-4958792.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Belgian Toast" class="menu-item-image">
                         <div class="menu-item-info">
                             <h3 class="menu-item-name">Belgický toast</h3>
                             <div class="menu-item-footer">
                                 <span class="menu-item-price">280 Kč</span>
-                                <span class="foodora-badge">Foodora</span>
+                                <span class=" -badge"> </span>
                             </div>
                         </div>
                     </div>
-                    <p class="menu-item-desc">S trhaným hovězím masem, jalapeños a cheddarem</p>
+                    <p class="menu-item-desc">Belgický toast s trhaným hovězím masem, jalapeños a cheddarem</p>
                 </div>
 
-                <div class="menu-item">
+                <div class="menu-item" data-aos="fade-up" data-aos-delay="1000">
                     <div class="menu-item-header">
-                        <img src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Tofu toasts" class="menu-item-image">
+                        <img src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Tofu Toasts" class="menu-item-image">
                         <div class="menu-item-info">
                             <h3 class="menu-item-name">Tofu toasts</h3>
                             <div class="menu-item-footer">
                                 <span class="menu-item-price">160 Kč</span>
-                                <span class="foodora-badge">Foodora</span>
+                                <span class=" -badge"> </span>
                             </div>
                         </div>
                     </div>
-                    <p class="menu-item-desc">Se zeleninou, salát (vegetarian/vegan)</p>
+                    <p class="menu-item-desc">Tofu toasts se zeleninou, salát</p>
                 </div>
 
-                <div class="menu-item">
+                <div class="menu-item" data-aos="fade-up" data-aos-delay="1100">
                     <div class="menu-item-header">
-                        <img src="https://images.pexels.com/photos/3026808/pexels-photo-3026808.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Rostlinná kaše" class="menu-item-image">
+                        <img src="https://images.pexels.com/photos/2787341/pexels-photo-2787341.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Plant Milk Porridge" class="menu-item-image">
                         <div class="menu-item-info">
-                            <h3 class="menu-item-name">Kaše rostlinná</h3>
+                            <h3 class="menu-item-name">Kaše rostlinné mléko</h3>
                             <div class="menu-item-footer">
                                 <span class="menu-item-price">210 Kč</span>
-                                <span class="foodora-badge">Foodora</span>
+                                <span class=" -badge"> </span>
                             </div>
                         </div>
                     </div>
-                    <p class="menu-item-desc">S rostlinným mlékem, ovoce (vegan)</p>
+                    <p class="menu-item-desc">Kaše s rostlinným mlékem, ovoce</p>
                 </div>
 
-                <div class="menu-item">
+                <div class="menu-item" data-aos="fade-up" data-aos-delay="1200">
                     <div class="menu-item-header">
-                        <img src="https://images.pexels.com/photos/1099680/pexels-photo-1099680.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Listový salát" class="menu-item-image">
+                        <img src="https://images.pexels.com/photos/1099680/pexels-photo-1099680.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Goat Cheese Salad" class="menu-item-image">
                         <div class="menu-item-info">
-                            <h3 class="menu-item-name">Listový salát</h3>
+                            <h3 class="menu-item-name">Listový salát kozí sýr</h3>
                             <div class="menu-item-footer">
                                 <span class="menu-item-price">280 Kč</span>
-                                <span class="foodora-badge">Foodora</span>
+                                <span class=" -badge"> </span>
                             </div>
                         </div>
                     </div>
-                    <p class="menu-item-desc">S kozím sýrem, jablky, vlašskými ořechy a brusinkami</p>
+                    <p class="menu-item-desc">Listový salát s kozím sýrem, jablky, vlašskými ořechy a brusinkami</p>
                 </div>
 
-                <div class="menu-item">
+                <div class="menu-item" data-aos="fade-up" data-aos-delay="1300">
                     <div class="menu-item-header">
-                        <img src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Proteinový chléb" class="menu-item-image">
+                        <img src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Protein Bread" class="menu-item-image">
                         <div class="menu-item-info">
                             <h3 class="menu-item-name">Proteinový chléb</h3>
                             <div class="menu-item-footer">
                                 <span class="menu-item-price">280 Kč</span>
-                                <span class="foodora-badge">Foodora</span>
+                                <span class=" -badge"> </span>
                             </div>
                         </div>
                     </div>
-                    <p class="menu-item-desc">S avokádem, míchanými vejci, semínky</p>
+                    <p class="menu-item-desc">Proteinový chléb s avokádem, míchanými vejci, semínky</p>
                 </div>
 
-                <div class="menu-item">
+                <div class="menu-item" data-aos="fade-up" data-aos-delay="1400">
                     <div class="menu-item-header">
-                        <img src="https://images.pexels.com/photos/3026808/pexels-photo-3026808.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Lívance s lososem" class="menu-item-image">
+                        <img src="https://images.pexels.com/photos/3026808/pexels-photo-3026808.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Salmon Pancakes" class="menu-item-image">
                         <div class="menu-item-info">
                             <h3 class="menu-item-name">Lívance s lososem</h3>
                             <div class="menu-item-footer">
@@ -957,8 +1070,8 @@
                 </div>
             </div>
 
-            <!-- Sausages -->
-            <div class="menu-table">
+            <!-- Sausages Section -->
+            <div class="menu-table" data-aos="fade-up">
                 <div class="menu-table-header">
                     <i class="fas fa-hotdog"></i> PÁRKY / SAUSAGES
                 </div>
@@ -975,7 +1088,7 @@
         </div>
 
         <!-- Coffee Section -->
-        <div class="menu-section" id="coffee-section" style="display: none;">
+        <div class="menu-section" id="coffee">
             <div class="section-header">
                 <h2 class="section-title">Káva & Čaj</h2>
                 <p class="section-subtitle">Výběrová káva z nejlepších plantáží světa</p>
@@ -985,7 +1098,7 @@
                 <strong>Poznámka:</strong> Alternativní mléka (mandlové, ovesné, sojové, bezlaktózové): + 15 Kč
             </div>
 
-            <div class="menu-table">
+            <div class="menu-table" data-aos="fade-up">
                 <div class="menu-table-header">
                     <i class="fas fa-coffee"></i> KÁVA A ČAJ / COFFEE AND TEA
                 </div>
@@ -1095,8 +1208,8 @@
                 </div>
             </div>
 
-            <!-- Ice Coffee -->
-            <div class="menu-table">
+            <!-- Ice Coffee Section -->
+            <div class="menu-table" data-aos="fade-up" data-aos-delay="200">
                 <div class="menu-table-header">
                     <i class="fas fa-snowflake"></i> ICE COFFEE AND DRINKS
                 </div>
@@ -1117,13 +1230,13 @@
                         <div class="menu-table-item">
                             <div class="menu-table-name">Ice Matcha Latte Raspberry</div>
                         </div>
-                        <div class="menu-table-price">135 Kč</div>
+                        <div class="menu-table-price">135 Kč <span class=" -badge" style="margin-left: 10px;"> </span></div>
                     </div>
                     <div class="menu-table-row">
                         <div class="menu-table-item">
                             <div class="menu-table-name">Caramel Frappe</div>
                         </div>
-                        <div class="menu-table-price">135 Kč</div>
+                        <div class="menu-table-price">135 Kč <span class=" -badge" style="margin-left: 10px;"> </span></div>
                     </div>
                     <div class="menu-table-row">
                         <div class="menu-table-item">
@@ -1142,20 +1255,20 @@
                             <div class="menu-table-name">Bumblebee</div>
                             <div class="menu-table-desc">Espresso + tonic + med</div>
                         </div>
-                        <div class="menu-table-price">150 Kč</div>
+                        <div class="menu-table-price">150 Kč <span class=" -badge" style="margin-left: 10px;"> </span></div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Drinks Section -->
-        <div class="menu-section" id="drinks-section" style="display: none;">
+        <div class="menu-section" id="drinks">
             <div class="section-header">
                 <h2 class="section-title">Nápoje</h2>
                 <p class="section-subtitle">Čerstvé džusy, limonády a nealkoholické nápoje</p>
             </div>
 
-            <div class="menu-table">
+            <div class="menu-table" data-aos="fade-up">
                 <div class="menu-table-header">
                     <i class="fas fa-glass-whiskey"></i> NEALKO / SOFT DRINKS
                 </div>
@@ -1228,13 +1341,13 @@
         </div>
 
         <!-- Cocktails Section -->
-        <div class="menu-section" id="cocktails-section" style="display: none;">
+        <div class="menu-section" id="cocktails">
             <div class="section-header">
                 <h2 class="section-title">Koktejly & Alkohol</h2>
                 <p class="section-subtitle">Výběr kvalitních koktejlů, piv a vín</p>
             </div>
 
-            <div class="menu-table">
+            <div class="menu-table" data-aos="fade-up">
                 <div class="menu-table-header">
                     <i class="fas fa-cocktail"></i> KOKTEJLY / COCKTAILS
                 </div>
@@ -1267,9 +1380,9 @@
                 </div>
             </div>
 
-            <div class="menu-table">
+            <div class="menu-table" data-aos="fade-up" data-aos-delay="200">
                 <div class="menu-table-header">
-                    <i class="fas fa-beer"></i> PIVO & VÍNO / BEER & WINE
+                    <i class="fas fa-beer"></i> PIVO / BEER
                 </div>
                 <div class="menu-table-content">
                     <div class="menu-table-row">
@@ -1286,6 +1399,14 @@
                         </div>
                         <div class="menu-table-price">85 Kč</div>
                     </div>
+                </div>
+            </div>
+
+            <div class="menu-table" data-aos="fade-up" data-aos-delay="400">
+                <div class="menu-table-header">
+                    <i class="fas fa-wine-glass"></i> VÍNO / WINE
+                </div>
+                <div class="menu-table-content">
                     <div class="menu-table-row">
                         <div class="menu-table-item">
                             <div class="menu-table-name">Prosecco (daily)</div>
@@ -1307,23 +1428,23 @@
 
     <!-- Payment Info -->
     <section class="payment-info">
-        <h2 style="font-size: 32px; margin-bottom: 30px; color: #333;">Platební informace</h2>
+        <h2 style="font-size: clamp(28px, 5vw, 36px); margin-bottom: 30px; color: #333;">Platební informace</h2>
         <div class="payment-grid">
-            <div class="payment-card">
+            <div class="payment-card" data-aos="fade-up">
                 <i class="fas fa-euro-sign"></i>
                 <h3>Přijímáme eura</h3>
                 <p>Kurz stejný jako v bance pro vaše pohodlí</p>
             </div>
             
-            <div class="payment-card">
+            <div class="payment-card" data-aos="fade-up" data-aos-delay="200">
                 <i class="fas fa-users"></i>
                 <h3>Skupiny platí dohromady</h3>
                 <p>Rychlejší obsluha a jednodušší účtování</p>
             </div>
             
-            <div class="payment-card">
+            <div class="payment-card" data-aos="fade-up" data-aos-delay="400">
                 <i class="fas fa-motorcycle"></i>
-                <h3>Foodora dostupné</h3>
+                <h3>  dostupné</h3>
                 <p>Vybrané položky si můžete objednat na dovoz</p>
             </div>
         </div>
@@ -1353,24 +1474,24 @@
     <!-- Footer -->
     <footer id="contact">
         <div class="footer-content">
-            <div class="footer-section">
+            <div class="footer-section" data-aos="fade-up">
                 <h3>BOND CAFÉ</h3>
                 <p>Nejlepší káva v centru Prahy. Navštivte nás na Štupartské 9 v Starém Městě.</p>
                 <div style="margin-top: 20px;">
-                    <a href="#" style="margin-right: 15px;"><i class="fab fa-instagram" style="font-size: 20px;"></i></a>
-                    <a href="#" style="margin-right: 15px;"><i class="fab fa-facebook-f" style="font-size: 20px;"></i></a>
-                    <a href="#"><i class="fab fa-twitter" style="font-size: 20px;"></i></a>
+                    <a href="#" style="margin-right: 15px; color: #ccc; text-decoration: none;"><i class="fab fa-instagram" style="font-size: 20px;"></i></a>
+                    <a href="#" style="margin-right: 15px; color: #ccc; text-decoration: none;"><i class="fab fa-facebook-f" style="font-size: 20px;"></i></a>
+                    <a href="#" style="color: #ccc; text-decoration: none;"><i class="fab fa-twitter" style="font-size: 20px;"></i></a>
                 </div>
             </div>
             
-            <div class="footer-section">
+            <div class="footer-section" data-aos="fade-up" data-aos-delay="200">
                 <h3>Kontakt</h3>
                 <p><i class="fas fa-map-marker-alt"></i> Štupartská 9, 110 00 Staré Město</p>
                 <p><i class="fas fa-phone"></i> <a href="tel:+420123456789">+420 123 456 789</a></p>
                 <p><i class="fas fa-envelope"></i> <a href="mailto:info@bondcafe.cz">info@bondcafe.cz</a></p>
             </div>
             
-            <div class="footer-section">
+            <div class="footer-section" data-aos="fade-up" data-aos-delay="400">
                 <h3>Otevírací doba</h3>
                 <p><strong>Po-Čt:</strong> 8:30 - 15:00</p>
                 <p><strong>Pá-Ne:</strong> 8:30 - 17:00</p>
@@ -1379,34 +1500,17 @@
         </div>
         
         <div style="text-align: center; padding-top: 30px; border-top: 1px solid #333; color: #666;">
-            <p>© 2024 Bond Café Praha. Všechna práva vyhrazena.</p>
+            <p>© 2025 Bond Café Praha. Všechna práva vyhrazena.</p>
         </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
-        // Category Navigation
-        document.querySelectorAll('.category-tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                // Remove active class from all tabs
-                document.querySelectorAll('.category-tab').forEach(t => {
-                    t.classList.remove('active');
-                });
-                
-                // Add active class to clicked tab
-                this.classList.add('active');
-                
-                // Hide all sections
-                document.querySelectorAll('.menu-section').forEach(section => {
-                    section.style.display = 'none';
-                });
-                
-                // Show selected section
-                const category = this.getAttribute('data-category');
-                const targetSection = document.getElementById(category + '-section');
-                if (targetSection) {
-                    targetSection.style.display = 'block';
-                }
-            });
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
         });
 
         // Header scroll effects
@@ -1425,6 +1529,16 @@
             lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
         });
 
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenu.style.display === 'flex') {
+                mobileMenu.style.display = 'none';
+            } else {
+                mobileMenu.style.display = 'flex';
+            }
+        }
+
         // WiFi Functions
         function openWiFiModal() {
             document.getElementById('wifiModal').style.display = 'flex';
@@ -1435,44 +1549,27 @@
         }
 
         function connectToWiFi(networkName) {
-            // Simulate WiFi connection for iOS
+            // Simulate WiFi connection
             const wifiBtn = document.querySelector('.wifi-connect');
             const originalText = wifiBtn.innerHTML;
             
             wifiBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Připojování...';
-            wifiBtn.style.background = '#ff9800';
+            wifiBtn.style.background = 'linear-gradient(135deg, #ff9800, #f57c00)';
             
             setTimeout(() => {
                 wifiBtn.innerHTML = '<i class="fas fa-check"></i> Připojeno';
-                wifiBtn.style.background = '#4CAF50';
-                wifiBtn.classList.add('connected');
+                wifiBtn.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
                 
                 // Show success message
-                if (navigator.vibrate) {
-                    navigator.vibrate(200); // Haptic feedback on supported devices
-                }
-                
-                // For iOS devices, try to open WiFi settings
-                if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
-                    // iOS 10+ - Try to open WiFi settings
-                    try {
-                        window.location.href = 'app-settings:wifi';
-                    } catch (e) {
-                        // Fallback
-                        alert(`Pro připojení k síti "${networkName}" přejděte do Nastavení > WiFi na vašem zařízení.`);
-                    }
-                } else {
-                    alert(`Připojeno k síti: ${networkName}`);
-                }
-                
+                alert(`Úspěšně připojeno k síti: ${networkName}`);
                 closeWiFiModal();
                 
                 // Reset after 3 seconds
                 setTimeout(() => {
                     wifiBtn.innerHTML = originalText;
-                    wifiBtn.style.background = '#c9a77c';
+                    wifiBtn.style.background = 'linear-gradient(135deg, #c9a77c, #b8966b)';
                 }, 3000);
-            }, 1500);
+            }, 2000);
         }
 
         // Smooth scrolling for anchor links
@@ -1481,7 +1578,7 @@
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    const headerHeight = 120;
+                    const headerHeight = 90;
                     const targetPosition = target.offsetTop - headerHeight;
                     
                     window.scrollTo({
@@ -1499,23 +1596,29 @@
             }
         });
 
-        // iOS-specific optimizations
-        if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
-            // Prevent zoom on input focus
-            document.addEventListener('touchstart', function() {});
+        // Enhanced menu item interactions
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
             
-            // Handle iOS safe areas
-            if (window.CSS && window.CSS.supports('padding-top: env(safe-area-inset-top)')) {
-                document.body.style.paddingTop = 'env(safe-area-inset-top)';
-            }
-        }
-
-        // Prevent context menu on long press for better mobile experience
-        document.addEventListener('contextmenu', function(e) {
-            if (e.target.closest('.menu-item') || e.target.closest('.category-tab')) {
-                e.preventDefault();
-            }
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
         });
+
+        // Parallax effect for hero section on desktop
+        if (window.innerWidth > 768) {
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const parallax = document.querySelector('.menu-hero');
+                const speed = scrolled * 0.3;
+                
+                if (parallax) {
+                    parallax.style.transform = `translateY(${speed}px)`;
+                }
+            });
+        }
     </script>
 </body>
 </html>
