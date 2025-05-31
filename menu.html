@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Menu - Bond Café Praha | Nejlepší káva a snídaně v centru Prahy</title>
+    <meta name="description" content="Prohlédněte si naše menu - káva, snídaně, dezerty a lehká jídla. Bond Café Praha, Štupartská 9, Staré Město.">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Bond Café">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            color: #000;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background: #fcf9f6;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(201, 167, 124, 0.1);
+        }
+        
+        header.scrolled {
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            padding: 15px 40px;
+            background: rgba(255, 255, 255, 0.98);
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: #c9a77c;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+        
+        .nav-links a {
+            font-size: 16px;
+            transition: color 0.2s ease;
+            position: relative;
+            padding: 8px 0;
+            color: #333;
+        }
+        
+        .nav-links a:hover {
+            color: #c9a77c;
+        }
+
+        /* WiFi Connect Button */
+        .wifi-connect {
+            background: #c9a77c;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            -webkit-appearance: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .wifi-connect:hover {
+            background: #b8966b;
+        }
+
+        .wifi-connect:active {
+            transform: scale(0.95);
+        }
+
+        .wifi-connect.connected {
+            background: #4CAF50;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            -webkit-appearance: none;
+        }
+
+        /* Hero Section */
+        .menu-hero {
+            height: 50vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin-top: 80px;
+            position: relative;
+        }
+
+        .menu-hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .menu-hero h1 {
+            font-size: 64px;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+        
+        .menu-hero p {
+            font-size: 18px;
+            max-width: 600px;
+        }
+
+        /* Quick Info Bar */
+        .quick-info {
+            background: #c9a77c;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .quick-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .quick-info-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 16px;
+        }
+
+        .quick-info-item i {
+            font-size: 18px;
+        }
+
+        /* Menu Content */
+        .menu-content {
+            padding: 60px 5% 50px;
+        }
+
+        /* Category Navigation */
+        .category-nav {
+            position: sticky;
+            top: 100px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 20px 0;
+            margin-bottom: 40px;
+            border-radius: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            z-index: 100;
+        }
+
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            padding: 0 20px;
+        }
+
+        .category-tab {
+            padding: 10px 20px;
+            background: white;
+            border: 1px solid #c9a77c;
+            color: #c9a77c;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            -webkit-appearance: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .category-tab.active,
+        .category-tab:hover {
+            background: #c9a77c;
+            color: white;
+        }
+
+        .category-tab:active {
+            transform: scale(0.95);
+        }
+
+        /* Menu Sections */
+        .menu-section {
+            margin-bottom: 60px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 42px;
+            font-weight: 400;
+            margin-bottom: 15px;
+            color: #c9a77c;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Menu Grid */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .menu-item-header {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .menu-item-image {
+            width: 70px;
+            height: 70px;
+            border-radius: 10px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .menu-item-info {
+            flex: 1;
+        }
+
+        .menu-item-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .menu-item-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        .menu-item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-item-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: #c9a77c;
+        }
+
+        .foodora-badge {
+            background: #e8497b;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        /* Table Style for Traditional Menu Items */
+        .menu-table {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+        .menu-table-header {
+            background: #c9a77c;
+            color: white;
+            padding: 20px;
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .menu-table-content {
+            padding: 0;
+        }
+
+        .menu-table-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background-color 0.2s ease;
+        }
+
+        .menu-table-row:hover {
+            background: #fcf9f6;
+        }
+
+        .menu-table-row:last-child {
+            border-bottom: none;
+        }
+
+        .menu-table-item {
+            flex: 1;
+        }
+
+        .menu-table-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .menu-table-desc {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .menu-table-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: #c9a77c;
+            white-space: nowrap;
+            margin-left: 20px;
+        }
+
+        /* Special Notes */
+        .special-note {
+            background: #fff9e6;
+            border-left: 4px solid #c9a77c;
+            padding: 15px 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .special-note strong {
+            color: #c9a77c;
+        }
+
+        /* Payment Info */
+        .payment-info {
+            background: #f8f8f8;
+            padding: 50px 5%;
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .payment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .payment-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease;
+        }
+
+        .payment-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .payment-card i {
+            font-size: 32px;
+            color: #c9a77c;
+            margin-bottom: 15px;
+        }
+
+        .payment-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .payment-card p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* WiFi Modal */
+        .wifi-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .wifi-modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 350px;
+            width: 90%;
+            margin: 20px;
+        }
+
+        .wifi-modal h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #c9a77c;
+        }
+
+        .wifi-info {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f8f8;
+            border-radius: 10px;
+        }
+
+        .wifi-connect-btn {
+            background: #c9a77c;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            margin: 8px;
+            transition: all 0.2s ease;
+            -webkit-appearance: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .wifi-connect-btn:hover {
+            background: #b8966b;
+        }
+
+        .wifi-connect-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            color: white;
+            padding: 50px 5% 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #c9a77c;
+        }
+
+        .footer-section p {
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .footer-section a {
+            color: white;
+            transition: color 0.2s ease;
+        }
+
+        .footer-section a:hover {
+            color: #c9a77c;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .menu-hero h1 {
+                font-size: 40px;
+            }
+            
+            .menu-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .menu-item-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .menu-item-image {
+                width: 100%;
+                height: 150px;
+                margin: 0 auto;
+            }
+
+            .category-nav {
+                position: relative;
+                top: 0;
+                margin-bottom: 30px;
+            }
+
+            .category-tabs {
+                gap: 10px;
+            }
+
+            .category-tab {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+
+            .menu-table-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .menu-table-price {
+                margin-left: 0;
+                align-self: flex-end;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .quick-info-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .payment-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        /* Apple-specific optimizations */
+        @supports (-webkit-touch-callout: none) {
+            .menu-item,
+            .category-tab,
+            .wifi-connect,
+            .wifi-connect-btn {
+                -webkit-tap-highlight-color: transparent;
+            }
+        }
+
+        /* Smooth scrolling for iOS */
+        @media screen and (-webkit-min-device-pixel-ratio: 0) {
+            html {
+                scroll-behavior: smooth;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">BOND CAFÉ</div>
+        <nav class="nav-links">
+            <a href="#eggs">Snídaně</a>
+            <a href="#coffee">Káva</a>
+            <a href="#drinks">Nápoje</a>
+            <a href="#cocktails">Koktejly</a>
+            <a href="#contact">Kontakt</a>
+        </nav>
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <button class="wifi-connect" onclick="openWiFiModal()">
+                <i class="fas fa-wifi"></i>
+                <span>WiFi</span>
+            </button>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="menu-hero">
+        <div class="menu-hero-content">
+            <h1>BOND MENU</h1>
+            <p>Kompletní menu s čerstvými snídaněmi, výběrovou kávou a jedinečnými koktejly</p>
+        </div>
+    </section>
+
+    <!-- Quick Info -->
+    <section class="quick-info">
+        <div class="quick-info-grid">
+            <div class="quick-info-item">
+                <i class="fas fa-wifi"></i>
+                <span>Bezplatné WiFi: BondCafe</span>
+            </div>
+            <div class="quick-info-item">
+                <i class="fas fa-euro-sign"></i>
+                <span>Přijímáme eura (kurz dle banky)</span>
+            </div>
+            <div class="quick-info-item">
+                <i class="fas fa-users"></i>
+                <span>Skupiny platí dohromady</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Navigation -->
+    <div class="category-nav">
+        <div class="category-tabs">
+            <div class="category-tab active" data-category="eggs">VEJCE & SNÍDANĚ</div>
+            <div class="category-tab" data-category="coffee">KÁVA & ČAJ</div>
+            <div class="category-tab" data-category="drinks">NÁPOJE</div>
+            <div class="category-tab" data-category="cocktails">KOKTEJLY & ALKOHOL</div>
+        </div>
+    </div>
+
+    <!-- Menu Content -->
+    <section class="menu-content">
+        <!-- Eggs Section -->
+        <div class="menu-section" id="eggs-section">
+            <div class="section-header">
+                <h2 class="section-title">Vejce & Snídaně</h2>
+                <p class="section-subtitle">Čerstvé snídaně připravované každý den od 8:30</p>
+            </div>
+
+            <!-- Eggs -->
+            <div class="menu-table">
+                <div class="menu-table-header">
+                    <i class="fas fa-egg"></i> EGGS / VEJCE
+                </div>
+                <div class="menu-table-content">
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Scrambled eggs</div>
+                            <div class="menu-table-desc">3 ks míchaných vajec, máslo, toast, salát</div>
+                        </div>
+                        <div class="menu-table-price">175 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Scrambled eggs + bacon</div>
+                            <div class="menu-table-desc">3 ks míchaných vajec, slanina, párek, toast, salát</div>
+                        </div>
+                        <div class="menu-table-price">210 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Scrambled eggs + beans</div>
+                            <div class="menu-table-desc">3 ks míchaných vajec, fazole, slanina, párek, toast, salát</div>
+                        </div>
+                        <div class="menu-table-price">240 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Scrambled eggs + goat cheese</div>
+                            <div class="menu-table-desc">3 ks míchaných vajec, slanina, kozí sýr, toast, máslo, salát</div>
+                        </div>
+                        <div class="menu-table-price">280 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Pancakes + bacon & egg</div>
+                            <div class="menu-table-desc">3 lívance se slaninou, míchaným vejcem, cibulkou, salát</div>
+                        </div>
+                        <div class="menu-table-price">280 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Salmon bread</div>
+                            <div class="menu-table-desc">Chléb s lososem, vejci, našlehaným sýrem, ředkvičkami, salát</div>
+                        </div>
+                        <div class="menu-table-price">280 Kč</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sweet Breakfast & Other Items -->
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <img src="https://images.pexels.com/photos/1395319/pexels-photo-1395319.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Toast with Nutella" class="menu-item-image">
+                        <div class="menu-item-info">
+                            <h3 class="menu-item-name">3 toasty Nutella</h3>
+                            <div class="menu-item-footer">
+                                <span class="menu-item-price">165 Kč</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="menu-item-desc">3 toasty, nutella, džem, med</p>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <img src="https://images.pexels.com/photos/1395319/pexels-photo-1395319.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Mini Croissants" class="menu-item-image">
+                        <div class="menu-item-info">
+                            <h3 class="menu-item-name">3 mini croissanty</h3>
+                            <div class="menu-item-footer">
+                                <span class="menu-item-price">210 Kč</span>
+                                <span class="foodora-badge">Foodora</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="menu-item-desc">Nutella, džem, med</p>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <img src="https://images.pexels.com/photos/3026808/pexels-photo-3026808.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Pancakes" class="menu-item-image">
+                        <div class="menu-item-info">
+                            <h3 class="menu-item-name">České lívance</h3>
+                            <div class="menu-item-footer">
+                                <span class="menu-item-price">255 Kč</span>
+                                <span class="foodora-badge">Foodora</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="menu-item-desc">3 tradiční české lívance se skořicí, máslem a ovocem</p>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <img src="https://images.pexels.com/photos/2787341/pexels-photo-2787341.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Granola Bowl" class="menu-item-image">
+                        <div class="menu-item-info">
+                            <h3 class="menu-item-name">Granola Bowl</h3>
+                            <div class="menu-item-footer">
+                                <span class="menu-item-price">240 Kč</span>
+                                <span class="foodora-badge">Foodora</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="menu-item-desc">Granola, jogurt, javorový sirup, ovoce, kokosové chipsy, ořechy</p>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <img src="https://images.pexels.com/photos/3026808/pexels-photo-3026808.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Porridge Bowl" class="menu-item-image">
+                        <div class="menu-item-info">
+                            <h3 class="menu-item-name">Porridge Bowl</h3>
+                            <div class="menu-item-footer">
+                                <span class="menu-item-price">240 Kč</span>
+                                <span class="foodora-badge">Foodora</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="menu-item-desc">Ovesná kaše s ovocem a bílou čokoládou</p>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <img src="https://images.pexels.com/photos/4958792/pexels-photo-4958792.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Bond Toasty" class="menu-item-image">
+                        <div class="menu-item-info">
+                            <h3 class="menu-item-name">Bond Toasty</h3>
+                            <div class="menu-item-footer">
+                                <span class="menu-item-price">185 Kč</span>
+                                <span class="foodora-badge">Foodora</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="menu-item-desc">Toasty se šunkou, sýrem, salát</p>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <img src="https://images.pexels.com/photos/4958792/pexels-photo-4958792.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Parmská šunka toast" class="menu-item-image">
+                        <div class="menu-item-info">
+                            <h3 class="menu-item-name">Toasty parmská šunka</h3>
+                            <div class="menu-item-footer">
+                                <span class="menu-item-price">185 Kč</span>
+                                <span class="foodora-badge">Foodora</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="menu-item-desc">Toasty s parmskou šunkou, sýrem, salát</p>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <img src="https://images.pexels.com/photos/4958792/pexels-photo-4958792.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Belgický toast" class="menu-item-image">
+                        <div class="menu-item-info">
+                            <h3 class="menu-item-name">Belgický toast</h3>
+                            <div class="menu-item-footer">
+                                <span class="menu-item-price">280 Kč</span>
+                                <span class="foodora-badge">Foodora</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="menu-item-desc">S trhaným hovězím masem, jalapeños a cheddarem</p>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <img src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Tofu toasts" class="menu-item-image">
+                        <div class="menu-item-info">
+                            <h3 class="menu-item-name">Tofu toasts</h3>
+                            <div class="menu-item-footer">
+                                <span class="menu-item-price">160 Kč</span>
+                                <span class="foodora-badge">Foodora</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="menu-item-desc">Se zeleninou, salát (vegetarian/vegan)</p>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <img src="https://images.pexels.com/photos/3026808/pexels-photo-3026808.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Rostlinná kaše" class="menu-item-image">
+                        <div class="menu-item-info">
+                            <h3 class="menu-item-name">Kaše rostlinná</h3>
+                            <div class="menu-item-footer">
+                                <span class="menu-item-price">210 Kč</span>
+                                <span class="foodora-badge">Foodora</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="menu-item-desc">S rostlinným mlékem, ovoce (vegan)</p>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <img src="https://images.pexels.com/photos/1099680/pexels-photo-1099680.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Listový salát" class="menu-item-image">
+                        <div class="menu-item-info">
+                            <h3 class="menu-item-name">Listový salát</h3>
+                            <div class="menu-item-footer">
+                                <span class="menu-item-price">280 Kč</span>
+                                <span class="foodora-badge">Foodora</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="menu-item-desc">S kozím sýrem, jablky, vlašskými ořechy a brusinkami</p>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <img src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Proteinový chléb" class="menu-item-image">
+                        <div class="menu-item-info">
+                            <h3 class="menu-item-name">Proteinový chléb</h3>
+                            <div class="menu-item-footer">
+                                <span class="menu-item-price">280 Kč</span>
+                                <span class="foodora-badge">Foodora</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="menu-item-desc">S avokádem, míchanými vejci, semínky</p>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <img src="https://images.pexels.com/photos/3026808/pexels-photo-3026808.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Lívance s lososem" class="menu-item-image">
+                        <div class="menu-item-info">
+                            <h3 class="menu-item-name">Lívance s lososem</h3>
+                            <div class="menu-item-footer">
+                                <span class="menu-item-price">280 Kč</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="menu-item-desc">Lívance s lososem a avokádem</p>
+                </div>
+            </div>
+
+            <!-- Sausages -->
+            <div class="menu-table">
+                <div class="menu-table-header">
+                    <i class="fas fa-hotdog"></i> PÁRKY / SAUSAGES
+                </div>
+                <div class="menu-table-content">
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">2 ks párek</div>
+                            <div class="menu-table-desc">Tvrdý sýr, hruška, hořčice, salátek, pečivo, máslo</div>
+                        </div>
+                        <div class="menu-table-price">260 Kč</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coffee Section -->
+        <div class="menu-section" id="coffee-section" style="display: none;">
+            <div class="section-header">
+                <h2 class="section-title">Káva & Čaj</h2>
+                <p class="section-subtitle">Výběrová káva z nejlepších plantáží světa</p>
+            </div>
+
+            <div class="special-note">
+                <strong>Poznámka:</strong> Alternativní mléka (mandlové, ovesné, sojové, bezlaktózové): + 15 Kč
+            </div>
+
+            <div class="menu-table">
+                <div class="menu-table-header">
+                    <i class="fas fa-coffee"></i> KÁVA A ČAJ / COFFEE AND TEA
+                </div>
+                <div class="menu-table-content">
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Espresso</div>
+                        </div>
+                        <div class="menu-table-price">55 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Espresso macchiato</div>
+                        </div>
+                        <div class="menu-table-price">65 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Double espresso</div>
+                        </div>
+                        <div class="menu-table-price">85 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Americano</div>
+                        </div>
+                        <div class="menu-table-price">65 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Lungo</div>
+                        </div>
+                        <div class="menu-table-price">65 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Cappuccino</div>
+                        </div>
+                        <div class="menu-table-price">83 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Caffè Latte</div>
+                        </div>
+                        <div class="menu-table-price">92 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Flat White</div>
+                        </div>
+                        <div class="menu-table-price">92 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Macchiato Latte</div>
+                        </div>
+                        <div class="menu-table-price">95 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Irish Coffee</div>
+                        </div>
+                        <div class="menu-table-price">140 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Baileys Coffee</div>
+                        </div>
+                        <div class="menu-table-price">140 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Hot Chocolate</div>
+                        </div>
+                        <div class="menu-table-price">85 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Chai Latte</div>
+                        </div>
+                        <div class="menu-table-price">95 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Tea Fresh</div>
+                        </div>
+                        <div class="menu-table-price">65 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Čaj (zelený/černý)</div>
+                        </div>
+                        <div class="menu-table-price">65 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Breakfast Tea</div>
+                        </div>
+                        <div class="menu-table-price">65 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Hot Ginger</div>
+                        </div>
+                        <div class="menu-table-price">85 Kč</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ice Coffee -->
+            <div class="menu-table">
+                <div class="menu-table-header">
+                    <i class="fas fa-snowflake"></i> ICE COFFEE AND DRINKS
+                </div>
+                <div class="menu-table-content">
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Ice Latte</div>
+                        </div>
+                        <div class="menu-table-price">120 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Ice Matcha Latte</div>
+                        </div>
+                        <div class="menu-table-price">110 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Ice Matcha Latte Raspberry</div>
+                        </div>
+                        <div class="menu-table-price">135 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Caramel Frappe</div>
+                        </div>
+                        <div class="menu-table-price">135 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Frozen Americano</div>
+                        </div>
+                        <div class="menu-table-price">65 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Espresso Tonic</div>
+                        </div>
+                        <div class="menu-table-price">110 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Bumblebee</div>
+                            <div class="menu-table-desc">Espresso + tonic + med</div>
+                        </div>
+                        <div class="menu-table-price">150 Kč</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Drinks Section -->
+        <div class="menu-section" id="drinks-section" style="display: none;">
+            <div class="section-header">
+                <h2 class="section-title">Nápoje</h2>
+                <p class="section-subtitle">Čerstvé džusy, limonády a nealkoholické nápoje</p>
+            </div>
+
+            <div class="menu-table">
+                <div class="menu-table-header">
+                    <i class="fas fa-glass-whiskey"></i> NEALKO / SOFT DRINKS
+                </div>
+                <div class="menu-table-content">
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Domácí limonáda</div>
+                            <div class="menu-table-desc">0,4 l</div>
+                        </div>
+                        <div class="menu-table-price">110 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Fresh Orange Juice</div>
+                            <div class="menu-table-desc">0,2 l</div>
+                        </div>
+                        <div class="menu-table-price">110 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Džus (jablko / pomeranč)</div>
+                            <div class="menu-table-desc">0,2 l</div>
+                        </div>
+                        <div class="menu-table-price">95 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Fresh Orange Lemonáda</div>
+                            <div class="menu-table-desc">0,4 l</div>
+                        </div>
+                        <div class="menu-table-price">120 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Pellegrino</div>
+                            <div class="menu-table-desc">0,25 l</div>
+                        </div>
+                        <div class="menu-table-price">85 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Solan de Cabras voda</div>
+                            <div class="menu-table-desc">0,33 l</div>
+                        </div>
+                        <div class="menu-table-price">85 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Coca-Cola</div>
+                            <div class="menu-table-desc">0,33 l</div>
+                        </div>
+                        <div class="menu-table-price">65 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Coca-Cola Zero</div>
+                            <div class="menu-table-desc">0,33 l</div>
+                        </div>
+                        <div class="menu-table-price">65 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Tonic</div>
+                            <div class="menu-table-desc">0,25 l</div>
+                        </div>
+                        <div class="menu-table-price">65 Kč</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cocktails Section -->
+        <div class="menu-section" id="cocktails-section" style="display: none;">
+            <div class="section-header">
+                <h2 class="section-title">Koktejly & Alkohol</h2>
+                <p class="section-subtitle">Výběr kvalitních koktejlů, piv a vín</p>
+            </div>
+
+            <div class="menu-table">
+                <div class="menu-table-header">
+                    <i class="fas fa-cocktail"></i> KOKTEJLY / COCKTAILS
+                </div>
+                <div class="menu-table-content">
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Bond Drink</div>
+                            <div class="menu-table-desc">Martini, vodka</div>
+                        </div>
+                        <div class="menu-table-price">155 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Gin & Tonic</div>
+                        </div>
+                        <div class="menu-table-price">155 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Aperol Spritz</div>
+                        </div>
+                        <div class="menu-table-price">145 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Mimosa</div>
+                        </div>
+                        <div class="menu-table-price">145 Kč</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-table">
+                <div class="menu-table-header">
+                    <i class="fas fa-beer"></i> PIVO & VÍNO / BEER & WINE
+                </div>
+                <div class="menu-table-content">
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Pilsner Urquell</div>
+                            <div class="menu-table-desc">0,5 l</div>
+                        </div>
+                        <div class="menu-table-price">75 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Bond Beer</div>
+                            <div class="menu-table-desc">0,33 l</div>
+                        </div>
+                        <div class="menu-table-price">85 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Prosecco (daily)</div>
+                            <div class="menu-table-desc">0,15 l</div>
+                        </div>
+                        <div class="menu-table-price">130 Kč</div>
+                    </div>
+                    <div class="menu-table-row">
+                        <div class="menu-table-item">
+                            <div class="menu-table-name">Champagne Gauthier</div>
+                            <div class="menu-table-desc">0,75 l</div>
+                        </div>
+                        <div class="menu-table-price">1 600 Kč</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Info -->
+    <section class="payment-info">
+        <h2 style="font-size: 32px; margin-bottom: 30px; color: #333;">Platební informace</h2>
+        <div class="payment-grid">
+            <div class="payment-card">
+                <i class="fas fa-euro-sign"></i>
+                <h3>Přijímáme eura</h3>
+                <p>Kurz stejný jako v bance pro vaše pohodlí</p>
+            </div>
+            
+            <div class="payment-card">
+                <i class="fas fa-users"></i>
+                <h3>Skupiny platí dohromady</h3>
+                <p>Rychlejší obsluha a jednodušší účtování</p>
+            </div>
+            
+            <div class="payment-card">
+                <i class="fas fa-motorcycle"></i>
+                <h3>Foodora dostupné</h3>
+                <p>Vybrané položky si můžete objednat na dovoz</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- WiFi Modal -->
+    <div class="wifi-modal" id="wifiModal">
+        <div class="wifi-modal-content">
+            <h3><i class="fas fa-wifi"></i> WiFi Bond Café</h3>
+            <div class="wifi-info">
+                <p><strong>Síť:</strong> BondCafe</p>
+                <p><strong>Alternativní:</strong> CAFEBOND007</p>
+                <p><small>Bezplatné připojení pro všechny hosty</small></p>
+            </div>
+            <button class="wifi-connect-btn" onclick="connectToWiFi('BondCafe')">
+                Připojit k BondCafe
+            </button>
+            <button class="wifi-connect-btn" onclick="connectToWiFi('CAFEBOND007')">
+                Připojit k CAFEBOND007
+            </button>
+            <button class="wifi-connect-btn" onclick="closeWiFiModal()" style="background: #666;">
+                Zavřít
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>BOND CAFÉ</h3>
+                <p>Nejlepší káva v centru Prahy. Navštivte nás na Štupartské 9 v Starém Městě.</p>
+                <div style="margin-top: 20px;">
+                    <a href="#" style="margin-right: 15px;"><i class="fab fa-instagram" style="font-size: 20px;"></i></a>
+                    <a href="#" style="margin-right: 15px;"><i class="fab fa-facebook-f" style="font-size: 20px;"></i></a>
+                    <a href="#"><i class="fab fa-twitter" style="font-size: 20px;"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Kontakt</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Štupartská 9, 110 00 Staré Město</p>
+                <p><i class="fas fa-phone"></i> <a href="tel:+420123456789">+420 123 456 789</a></p>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:info@bondcafe.cz">info@bondcafe.cz</a></p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Otevírací doba</h3>
+                <p><strong>Po-Čt:</strong> 8:30 - 15:00</p>
+                <p><strong>Pá-Ne:</strong> 8:30 - 17:00</p>
+                <p style="margin-top: 15px;"><i class="fas fa-wifi"></i> WiFi: BondCafe / CAFEBOND007</p>
+            </div>
+        </div>
+        
+        <div style="text-align: center; padding-top: 30px; border-top: 1px solid #333; color: #666;">
+            <p>© 2024 Bond Café Praha. Všechna práva vyhrazena.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Category Navigation
+        document.querySelectorAll('.category-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.category-tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Hide all sections
+                document.querySelectorAll('.menu-section').forEach(section => {
+                    section.style.display = 'none';
+                });
+                
+                // Show selected section
+                const category = this.getAttribute('data-category');
+                const targetSection = document.getElementById(category + '-section');
+                if (targetSection) {
+                    targetSection.style.display = 'block';
+                }
+            });
+        });
+
+        // Header scroll effects
+        let lastScrollTop = 0;
+        const header = document.querySelector('header');
+        
+        window.addEventListener('scroll', function() {
+            let currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (currentScrollTop > 20) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
+        });
+
+        // WiFi Functions
+        function openWiFiModal() {
+            document.getElementById('wifiModal').style.display = 'flex';
+        }
+
+        function closeWiFiModal() {
+            document.getElementById('wifiModal').style.display = 'none';
+        }
+
+        function connectToWiFi(networkName) {
+            // Simulate WiFi connection for iOS
+            const wifiBtn = document.querySelector('.wifi-connect');
+            const originalText = wifiBtn.innerHTML;
+            
+            wifiBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Připojování...';
+            wifiBtn.style.background = '#ff9800';
+            
+            setTimeout(() => {
+                wifiBtn.innerHTML = '<i class="fas fa-check"></i> Připojeno';
+                wifiBtn.style.background = '#4CAF50';
+                wifiBtn.classList.add('connected');
+                
+                // Show success message
+                if (navigator.vibrate) {
+                    navigator.vibrate(200); // Haptic feedback on supported devices
+                }
+                
+                // For iOS devices, try to open WiFi settings
+                if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+                    // iOS 10+ - Try to open WiFi settings
+                    try {
+                        window.location.href = 'app-settings:wifi';
+                    } catch (e) {
+                        // Fallback
+                        alert(`Pro připojení k síti "${networkName}" přejděte do Nastavení > WiFi na vašem zařízení.`);
+                    }
+                } else {
+                    alert(`Připojeno k síti: ${networkName}`);
+                }
+                
+                closeWiFiModal();
+                
+                // Reset after 3 seconds
+                setTimeout(() => {
+                    wifiBtn.innerHTML = originalText;
+                    wifiBtn.style.background = '#c9a77c';
+                }, 3000);
+            }, 1500);
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerHeight = 120;
+                    const targetPosition = target.offsetTop - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('wifiModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeWiFiModal();
+            }
+        });
+
+        // iOS-specific optimizations
+        if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+            // Prevent zoom on input focus
+            document.addEventListener('touchstart', function() {});
+            
+            // Handle iOS safe areas
+            if (window.CSS && window.CSS.supports('padding-top: env(safe-area-inset-top)')) {
+                document.body.style.paddingTop = 'env(safe-area-inset-top)';
+            }
+        }
+
+        // Prevent context menu on long press for better mobile experience
+        document.addEventListener('contextmenu', function(e) {
+            if (e.target.closest('.menu-item') || e.target.closest('.category-tab')) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

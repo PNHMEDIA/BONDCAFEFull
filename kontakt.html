@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakt - Bond Café Praha | Rezervace a informace</title>
+    <meta name="description" content="Kontaktujte Bond Café Praha. Rezervace stolů, informace o akcích, adresa a otevírací doba. Štupartská 9, Praha 1.">
+    <meta name="keywords" content="kontakt Bond Café, rezervace Praha, kavárna kontakt, Bond Café adresa">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Kontakt - Bond Café Praha">
+    <meta property="og:description" content="Kontaktujte Bond Café Praha. Rezervace stolů, informace o akcích.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://bondcafe.cz/kontakt">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        "name": "Kontakt - Bond Café",
+        "description": "Kontaktní informace Bond Café Praha",
+        "mainEntity": {
+            "@type": "Restaurant",
+            "name": "Bond Café",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Štupartská 9",
+                "addressLocality": "Praha",
+                "postalCode": "110 00",
+                "addressCountry": "CZ"
+            },
+            "telephone": "+420123456789",
+            "email": "info@bondcafe.cz",
+            "openingHours": "Mo-Th 08:00-18:00, Fr-Sa 08:00-20:00, Su 08:00-18:00"
+        }
+    }
+    </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            color: #333;
+            line-height: 1.6;
+            background-color: #fcf9f6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: rgba(255, 255, 255, 0.95);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.4s ease;
+        }
+        
+        header.scrolled {
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 15px 40px;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            color: #c9a77c;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+        
+        .nav-links a {
+            font-size: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #c9a77c;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .nav-links a:hover {
+            color: #c9a77c;
+        }
+        
+        .menu-btn {
+            background-color: #c9a77c;
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .menu-btn:hover {
+            background-color: #b8966b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(201, 167, 124, 0.3);
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        .mobile-menu a {
+            color: white;
+            font-size: 24px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .mobile-menu a:hover {
+            color: #c9a77c;
+        }
+        
+        .mobile-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .contact-hero {
+            height: 60vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin-top: 80px;
+        }
+        
+        .contact-hero h1 {
+            font-size: 64px;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+        
+        .contact-hero p {
+            font-size: 20px;
+            max-width: 600px;
+        }
+
+        /* Contact Content */
+        .contact-content {
+            padding: 100px 0;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 80px;
+        }
+        
+        .contact-info {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-info h2 {
+            font-size: 32px;
+            color: #c9a77c;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #fcf9f6;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-item i {
+            font-size: 24px;
+            color: #c9a77c;
+            width: 30px;
+            flex-shrink: 0;
+            margin-top: 5px;
+        }
+        
+        .contact-item-content h3 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .contact-item-content p {
+            color: #666;
+            margin: 0;
+        }
+        
+        .contact-item-content a {
+            color: #c9a77c;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .contact-item-content a:hover {
+            color: #b8966b;
+        }
+        
+        /* Contact Form */
+        .contact-form {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-form h2 {
+            font-size: 32px;
+            color: #c9a77c;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+            font-size: 16px;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #c9a77c;
+            box-shadow: 0 0 0 3px rgba(201, 167, 124, 0.1);
+        }
+        
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background-color: #c9a77c;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        
+        .submit-btn:hover {
+            background-color: #b8966b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(201, 167, 124, 0.3);
+        }
+        
+        .form-note {
+            font-size: 14px;
+            color: #666;
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .form-note a {
+            color: #c9a77c;
+            text-decoration: none;
+        }
+        
+        /* Opening Hours */
+        .opening-hours {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 60px;
+        }
+        
+        .opening-hours h2 {
+            font-size: 32px;
+            color: #c9a77c;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .hours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .hours-item {
+            text-align: center;
+            padding: 25px;
+            background: #fcf9f6;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .hours-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hours-item h3 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .hours-item p {
+            font-size: 18px;
+            color: #c9a77c;
+            font-weight: 500;
+        }
+        
+        /* Map Section */
+        .map-section {
+            margin: 80px 0;
+        }
+        
+        .map-section h2 {
+            font-size: 36px;
+            color: #c9a77c;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .map-container {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        
+        .map-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(235, 227, 205, 0.2);
+            pointer-events: none;
+        }
+        
+        .map-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .map-btn {
+            background: #c9a77c;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .map-btn:hover {
+            background: #b8966b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(201, 167, 124, 0.3);
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 60px;
+        }
+        
+        .faq-section h2 {
+            font-size: 36px;
+            color: #c9a77c;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .faq-item {
+            margin-bottom: 25px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        
+        .faq-question {
+            font-size: 20px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .faq-question i {
+            color: #c9a77c;
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            color: #c9a77c;
+        }
+        
+        .faq-answer {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #000;
+            color: white;
+            padding: 70px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #c9a77c;
+        }
+        
+        .footer-section p {
+            margin-bottom: 15px;
+        }
+        
+        .footer-section a {
+            color: white;
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .footer-section a:hover {
+            color: #c9a77c;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .footer-social a {
+            font-size: 20px;
+            transition: opacity 0.3s ease;
+        }
+        
+        .footer-social a:hover {
+            opacity: 0.7;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            font-size: 14px;
+            transition: color 0.3s ease;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .footer-links a:hover {
+            color: #c9a77c;
+        }
+        
+        .footer-copyright {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        
+        /* Success Message */
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+            display: none;
+        }
+        
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+            display: none;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .contact-hero h1 {
+                font-size: 48px;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .contact-hero {
+                height: 50vh;
+                padding: 0 20px;
+            }
+            
+            .contact-hero h1 {
+                font-size: 36px;
+            }
+            
+            .contact-content {
+                padding: 60px 0;
+            }
+            
+            .contact-info,
+            .contact-form,
+            .opening-hours,
+            .faq-section {
+                padding: 30px 20px;
+            }
+            
+            .map-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .map-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">BOND CAFÉ</div>
+        <nav class="nav-links">
+            <a href="index.html">Domů</a>
+            <a href="menu.html">Menu</a>
+            <a href="#about">O nás</a>
+            <a href="#gallery">Galerie</a>
+            <a href="#contact">Kontakt</a>
+        </nav>
+        <div class="header-right">
+            <a href="menu.html" class="menu-btn">MENU</a>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-close" onclick="toggleMobileMenu()">&times;</button>
+        <a href="index.html" onclick="toggleMobileMenu()">Domů</a>
+        <a href="menu.html" onclick="toggleMobileMenu()">Menu</a>
+        <a href="#about" onclick="toggleMobileMenu()">O nás</a>
+        <a href="#gallery" onclick="toggleMobileMenu()">Galerie</a>
+        <a href="#contact" onclick="toggleMobileMenu()">Kontakt</a>
+    </div>
+
+    <!-- Contact Hero Section -->
+    <section class="contact-hero">
+        <div data-aos="fade-up" data-aos-duration="1000">
+            <h1>Kontaktujte nás</h1>
+            <p>Jsme tu pro vás každý den. Rádi odpovíme na vaše dotazy, přijmeme rezervaci nebo si jen popovídáme o kávě.</p>
+        </div>
+    </section>
+
+    <!-- Contact Content -->
+    <section class="contact-content">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Contact Information -->
+                <div class="contact-info" data-aos="fade-right" data-aos-duration="800">
+                    <h2>Kontaktní informace</h2>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="contact-item-content">
+                            <h3>Adresa</h3>
+                            <p>Štupartská 9<br>110 00 Staré Město<br>Praha</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div class="contact-item-content">
+                            <h3>Telefon</h3>
+                            <p><a href="tel:+420123456789">+420 123 456 789</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div class="contact-item-content">
+                            <h3>Email</h3>
+                            <p>Obecné dotazy: <a href="mailto:info@bondcafe.cz">info@bondcafe.cz</a><br>
+                            Rezervace: <a href="mailto:rezervace@bondcafe.cz">rezervace@bondcafe.cz</a><br>
+                            Akce a oslavy: <a href="mailto:akce@bondcafe.cz">akce@bondcafe.cz</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-users"></i>
+                        <div class="contact-item-content">
+                            <h3>Sociální sítě</h3>
+                            <p>
+                                <a href="#" target="_blank">Facebook</a> |
+                                <a href="#" target="_blank">Instagram</a> |
+                                <a href="#" target="_blank">TikTok</a>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-motorcycle"></i>
+                        <div class="contact-item-content">
+                            <h3>Objednávky s dovozem</h3>
+                            <p><a href="https://www.foodora.cz/restaurant/iehh/bond-cafe" target="_blank">Foodora</a><br>
+                            Minimální objednávka: 300 Kč<br>
+                            Poplatek za doručení: 50 Kč</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Form -->
+                <div class="contact-form" data-aos="fade-left" data-aos-duration="800">
+                    <h2>Napište nám</h2>
+                    
+                    <div class="success-message" id="successMessage">
+                        <i class="fas fa-check-circle"></i> Děkujeme za vaši zprávu! Ozveme se vám co nejdříve.
+                    </div>
+                    
+                    <div class="error-message" id="errorMessage">
+                        <i class="fas fa-exclamation-triangle"></i> Došlo k chybě při odesílání. Zkuste to prosím znovu.
+                    </div>
+                    
+                    <form id="contactForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="firstName">Jméno *</label>
+                                <input type="text" id="firstName" name="firstName" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="lastName">Příjmení *</label>
+                                <input type="text" id="lastName" name="lastName" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">Telefon</label>
+                                <input type="tel" id="phone" name="phone">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Předmět *</label>
+                            <select id="subject" name="subject" required>
+                                <option value="">Vyberte předmět</option>
+                                <option value="reservation">Rezervace stolu</option>
+                                <option value="event">Firemní akce / oslava</option>
+                                <option value="complaint">Reklamace</option>
+                                <option value="feedback">Zpětná vazba</option>
+                                <option value="cooperation">Spolupráce</option>
+                                <option value="other">Ostatní</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="date">Preferovaný termín</label>
+                                <input type="date" id="date" name="date">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="guests">Počet osob</label>
+                                <select id="guests" name="guests">
+                                    <option value="">Vyberte počet</option>
+                                    <option value="1">1 osoba</option>
+                                    <option value="2">2 osoby</option>
+                                    <option value="3">3 osoby</option>
+                                    <option value="4">4 osoby</option>
+                                    <option value="5">5 osob</option>
+                                    <option value="6">6 osob</option>
+                                    <option value="7+">7+ osob</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Zpráva *</label>
+                            <textarea id="message" name="message" required placeholder="Popište nám váš dotaz, požadavky na rezervaci nebo cokoliv dalšího..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i> Odeslat zprávu
+                        </button>
+                        
+                        <p class="form-note">
+                            Odesláním souhlasíte se zpracováním osobních údajů podle našich 
+                            <a href="#privacy">zásad ochrany osobních údajů</a>.
+                            Odpovídáme obvykle do 2 hodin během pracovní doby.
+                        </p>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Opening Hours -->
+            <div class="opening-hours" data-aos="fade-up" data-aos-duration="800">
+                <h2>Otevírací doba</h2>
+                <div class="hours-grid">
+                    <div class="hours-item">
+                        <h3>Pondělí - Čtvrtek</h3>
+                        <p>8:30 - 15:00</p>
+                    </div>
+                    <div class="hours-item">
+                        <h3>Pátek - Neděle</h3>
+                        <p>8:30 - 17:00</p>
+                    </div>
+                    
+                </div>
+                <div style="text-align: center; margin-top: 30px; padding: 20px; background: #fff9e6; border-radius: 10px;">
+                    <p><strong>Speciální otevírací doba:</strong> O svátcích a při akcích se otevírací doba může lišit. 
+                    Aktuální informace najdete na našich sociálních sítích nebo nás kontaktujte.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section">
+        <div class="container">
+            <h2 data-aos="fade-up" data-aos-duration="800">Kde nás najdete</h2>
+            <div class="map-container" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2559.919118232477!2d14.422157477300392!3d50.08780117152529!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470b94ebc85e816d%3A0x2e584ab975188878!2sBond%20Cafe!5e0!3m2!1scs!2scz!4v1747949107536!5m2!1scs!2scz" allowfullscreen></iframe>
+                <div class="map-overlay"></div>
+            </div>
+            
+            <div class="map-buttons" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
+                <a href="https://maps.app.goo.gl/dvF1HxwPkEUSfGbJ6" target="_blank" rel="noopener" class="map-btn">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Otevřít v Mapách</span>
+                </a>
+                <a href="https://www.google.com/maps/dir/?api=1&destination=Bond+Cafe,+Praha" target="_blank" rel="noopener" class="map-btn">
+                    <i class="fas fa-route"></i>
+                    <span>Navigovat k nám</span>
+                </a>
+                <a href="tel:+420123456789" class="map-btn">
+                    <i class="fas fa-phone"></i>
+                    <span>Zavolat</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="container">
+        <div class="faq-section" data-aos="fade-up" data-aos-duration="800">
+            <h2>Často kladené otázky</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Jak si mohu rezervovat stůl?</span>
+                </div>
+                <div class="faq-answer">
+                    Rezervaci můžete provést telefonicky na +420 123 456 789, emailem na rezervace@bondcafe.cz, 
+                    osobně v kavárně nebo prostřednictvím kontaktního formuláře výše. Doporučujeme rezervovat 
+                    alespoň 2 hodiny předem.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Máte bezbariérový přístup?</span>
+                </div>
+                <div class="faq-answer">
+                    Ano, naše kavárna má bezbariérový přístup a WC pro osoby s omezenou mobilitou. 
+                    Vstup je na úrovni ulice bez schodů.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Můžu k vám se psem?</span>
+                </div>
+                <div class="faq-answer">
+                    Domácí mazlíčky přijímáme po předchozí domluvě. Pes musí být klidný, na vodítku 
+                    a nesmí obtěžovat ostatní hosty. Prosím kontaktujte nás předem.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Pořádáte firemní akce a oslavy?</span>
+                </div>
+                <div class="faq-answer">
+                    Ano, pořádáme soukromé akce, firemní setkání, narozeniny a další oslavy. 
+                    Můžeme kavárnu rezervovat výhradně pro vás nebo připravit speciální menu. 
+                    Kontaktujte nás na akce@bondcafe.cz.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Máte Wi-Fi?</span>
+                </div>
+                <div class="faq-answer">
+                    Ano, poskytujeme bezplatné Wi-Fi připojení pro všechny hosty. 
+                    Heslo získáte u obsluhy nebo najdete na účtence.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Jaké způsoby platby přijímáte?</span>
+                </div>
+                <div class="faq-answer">
+                    Přijímáme hotovost v českých korunách, všechny běžné platební karty (Visa, MasterCard), 
+                    bezkontaktní platby včetně NFC a mobilních plateb (Apple Pay, Google Pay).
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section" data-aos="fade-up" data-aos-duration="800">
+                    <h3>BOND CAFÉ</h3>
+                    <p>Nejlepší káva v Praze. Navštivte nás v centru Prahy a ochutnejte naši výběrovou kávu.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                    <h3>Kontakt</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Štupartská 9, 110 00 Staré Město</p>
+                    <p><i class="fas fa-phone"></i> <a href="tel:+420123456789">+420 123 456 789</a></p>
+                    <p><i class="fas fa-envelope"></i> <a href="mailto:info@bondcafe.cz">info@bondcafe.cz</a></p>
+                    <p><i class="fas fa-clock"></i> Po-Čt 8:00-18:00, Pá-So 8:00-20:00</p>
+                </div>
+                
+                <div class="footer-section" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
+                    <h3>Rychlé odkazy</h3>
+                    <p><a href="index.html">Domů</a></p>
+                    <p><a href="menu.html">Menu</a></p>
+                    <p><a href="#about">O nás</a></p>
+                    <p><a href="#gallery">Galerie</a></p>
+                    <p><a href="#contact">Kontakt</a></p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-links">
+                    <a href="#privacy">Ochrana osobních údajů</a>
+                    <a href="#terms">Obchodní podmínky</a>
+                    <a href="#cookies">Zásady cookies</a>
+                    <a href="#sitemap">Mapa stránek</a>
+                </div>
+                <div class="footer-copyright">
+                    © 2024 Bond Café Praha. Všechna práva vyhrazena. | 
+                    IČO: 05594278 | DIČ: CZ05594278 | 
+                    <a href="https://www.pnhmedia.com" target="_blank" rel="noopener">Vytvořeno: PNH MEDIA</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // Initialize AOS animation library
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+        });
+        
+        // Mobile menu functionality
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenu.style.display === 'flex') {
+                mobileMenu.style.display = 'none';
+            } else {
+                mobileMenu.style.display = 'flex';
+            }
+        }
+        
+        // Scroll handling for navbar
+        let lastScrollTop = 0;
+        const header = document.querySelector('header');
+        const scrollThreshold = 100;
+        
+        window.addEventListener('scroll', function() {
+            let currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (currentScrollTop > 20) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
+        }, false);
+        
+        // Contact form handling
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Simple validation
+            if (!data.firstName || !data.lastName || !data.email || !data.subject || !data.message) {
+                showMessage('error', 'Prosím vyplňte všechna povinná pole.');
+                return;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(data.email)) {
+                showMessage('error', 'Prosím zadejte platnou emailovou adresu.');
+                return;
+            }
+            
+            // Simulate form submission
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Odesílám...';
+            submitBtn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                showMessage('success', 'Děkujeme za vaši zprávu! Ozveme se vám co nejdříve.');
+                this.reset();
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
+        });
+        
+        function showMessage(type, message) {
+            const successMsg = document.getElementById('successMessage');
+            const errorMsg = document.getElementById('errorMessage');
+            
+            // Hide both messages first
+            successMsg.style.display = 'none';
+            errorMsg.style.display = 'none';
+            
+            if (type === 'success') {
+                successMsg.style.display = 'block';
+                successMsg.innerHTML = '<i class="fas fa-check-circle"></i> ' + message;
+                setTimeout(() => {
+                    successMsg.style.display = 'none';
+                }, 5000);
+            } else {
+                errorMsg.style.display = 'block';
+                errorMsg.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ' + message;
+                setTimeout(() => {
+                    errorMsg.style.display = 'none';
+                }, 5000);
+            }
+        }
+        
+        // FAQ functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const answer = this.nextElementSibling;
+                const icon = this.querySelector('i');
+                
+                if (answer.style.display === 'block') {
+                    answer.style.display = 'none';
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    // Close all other answers
+                    document.querySelectorAll('.faq-answer').forEach(ans => {
+                        ans.style.display = 'none';
+                    });
+                    document.querySelectorAll('.faq-question i').forEach(ic => {
+                        ic.style.transform = 'rotate(0deg)';
+                    });
+                    
+                    // Open clicked answer
+                    answer.style.display = 'block';
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+        
+        // Auto-set minimum date to today
+        document.getElementById('date').min = new Date().toISOString().split('T')[0];
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerHeight = 80;
+                    const targetPosition = target.offsetTop - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
